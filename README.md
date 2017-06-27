@@ -1,0 +1,2 @@
+# udp_logger_serv
+基于tornado实现的UDP日志服务器
