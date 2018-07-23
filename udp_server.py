@@ -15,6 +15,7 @@ def add_accept_handler(sock, callback, io_loop=None):
     if io_loop is None:
         io_loop = IOLoop.instance()
 
+    # ioloop在有数据可读时，使用的回调函数
     def accept_handler(fd, events):
         while True:
             try:
@@ -103,5 +104,5 @@ class UDPServer(object):
     def _on_receive(data, address):
         try:
             logging.info(data.decode())
-        except:
-            print("from {} - {}".format(address, data))
+        except Exception as err:
+            print("from {} - {}, err = {}".format(address, data, err))

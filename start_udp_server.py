@@ -34,6 +34,7 @@ def init_log_handler():
         print(err_info)
         exit(-1)
 
+
 if __name__ == '__main__':
     try:
         options.parse_command_line()
