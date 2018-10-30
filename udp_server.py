@@ -26,7 +26,7 @@ def add_accept_handler(sock, callback, io_loop=None):
 
                 raise
 
-            callback(data, address)
+            callback(sock, data, address)
 
     io_loop.add_handler(sock.fileno(), accept_handler, IOLoop.READ)
 
@@ -52,7 +52,7 @@ def bind_sockets(port, address=None, family=socket.AF_UNSPEC, backlog=25):
             if hasattr(socket, "IPPROTO_IPV6"):
                 sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 1)
 
-        sock.setblocking(0)
+        sock.setblocking(False)
         sock.bind(sockaddr)
         sockets.append(sock)
 
@@ -101,8 +101,9 @@ class UDPServer(object):
             sock.close()
 
     @staticmethod
-    def _on_receive(data, address):
+    def _on_receive(sock, data, address):
         try:
             logging.info(data.decode())
+            sock.sendto("test response".encode(), address)
         except Exception as err:
             print("from {} - {}, err = {}".format(address, data, err))
